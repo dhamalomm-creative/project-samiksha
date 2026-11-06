@@ -1,70 +1,32 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Figtree, Fraunces } from "next/font/google";
+import type { ReactNode } from "react";
+import { Toaster } from "sonner";
+import { siteUrl } from "@/lib/paths";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
+const figtree = Figtree({ subsets: ["latin"], variable: "--font-figtree", display: "swap" });
+const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap" });
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
+const description = "Make a wishlist, share it with the people you love, and let them reserve gifts in secret.";
 
 export const metadata: Metadata = {
-  title: {
-    default: "Samiksha",
-    template: "%s • Samiksha",
-  },
-  description:
-    "Discover, share and organize wishlists with friends and family.",
+  metadataBase: new URL(siteUrl()),
+  title: { default: "Samiksha: wishlists for meaningful gifting", template: "%s · Samiksha" },
+  description,
   applicationName: "Samiksha",
-  keywords: [
-    "wishlist",
-    "gift",
-    "shopping",
-    "social",
-    "wishlist app",
-    "samiksha",
-  ],
-  authors: [
-    {
-      name: "Sahas Farsole",
-    },
-  ],
-  creator: "Sahas Farsole",
-  metadataBase: new URL("http://localhost:3000"),
+  openGraph: { type: "website", siteName: "Samiksha", description, locale: "en_IN" },
+  twitter: { card: "summary" },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = { themeColor: "#faf6ee" };
+
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cn(
-        "h-full scroll-smooth",
-        geistSans.variable,
-        geistMono.variable,
-        inter.variable,
-        "font-sans antialiased"
-      )}
-    >
-      <body className="min-h-screen bg-slate-50 text-slate-900">
+    <html lang="en-IN" className={`${figtree.variable} ${fraunces.variable}`}>
+      <body className="antialiased">
         {children}
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );
